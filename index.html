@@ -342,6 +342,14 @@ body::after {
 }
 .progress-text { font-size: 18px; font-weight: 700; color: rgba(90, 70, 40, 0.8); }
 .timer-text { font-size: 18px; font-weight: 700; color: rgba(200, 80, 60, 0.8); font-variant-numeric: tabular-nums; }
+.timer-text.urgent {
+  color: #E53935 !important;
+  animation: timer-urgent 0.4s ease-in-out infinite;
+}
+@keyframes timer-urgent {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
 
 .progress-bar-bg {
   width: 100%; max-width: 500px; height: 16px;
@@ -1831,13 +1839,18 @@ function createMoleTauntSVG() {
 }
 
 // ===== GAME STATE =====
+function getTimeLimit(difficulty) {
+  const limits = { 1: 10, 2: 12, 3: 15, 4: 15, 5: 20 };
+  return limits[difficulty] || 10;
+}
+
 let gameState = {
   questions: [],
   current: 0,
   answers: [],
   userAnswer: '',
-  startTime: null,
-  elapsed: 0,
+  timeLimit: 10,
+  timeLeft: 10,
   timerInterval: null,
   combo: 0,
   maxCombo: 0,
@@ -1845,6 +1858,8 @@ let gameState = {
   difficulty: 1,
   inputLocked: false,
   stars: 0,
+  timeouts: 0,
+  totalTime: 0,
 };
 
 // ===== DOM REFS =====
@@ -1929,12 +1944,14 @@ function startGame() {
   gameState.current = 0;
   gameState.answers = [];
   gameState.userAnswer = '';
-  gameState.elapsed = 0;
+  gameState.timeLimit = getTimeLimit(gameState.difficulty);
+  gameState.timeLeft = gameState.timeLimit;
   gameState.combo = 0;
   gameState.maxCombo = 0;
-  gameState.startTime = null;
   gameState.inputLocked = false;
   gameState.stars = 0;
+  gameState.timeouts = 0;
+  gameState.totalTime = 0;
   clearInterval(gameState.timerInterval);
 
   $('starCounterNum').textContent = '0';
@@ -1949,7 +1966,6 @@ function showQuestion() {
   const total = gameState.totalCount;
 
   $('progressText').textContent = `${idx + 1} / ${total}`;
-  $('timerText').textContent = formatTime(gameState.elapsed);
   $('questionDisplay').textContent = `${q.text} = ?`;
   gameState.userAnswer = '';
   gameState.inputLocked = false;
@@ -1958,24 +1974,29 @@ function showQuestion() {
   const mole = $('mole');
   mole.className = 'mole';
   $('moleBody').innerHTML = createMoleSVG();
-
-  // Animate mole up
   requestAnimationFrame(() => { mole.classList.add('up'); });
 
-  // Start timer on first question
-  if (idx === 0 && !gameState.startTime) {
-    gameState.startTime = performance.now();
-    gameState.timerInterval = setInterval(updateTimer, 100);
-  }
+  // Reset and start per-question countdown
+  clearInterval(gameState.timerInterval);
+  gameState.timeLeft = gameState.timeLimit;
+  const timerEl = $('timerText');
+  timerEl.classList.remove('urgent');
+  timerEl.textContent = gameState.timeLeft;
+  gameState.timerInterval = setInterval(updateTimer, 1000);
 }
 
 function updateTimer() {
-  gameState.elapsed = (performance.now() - gameState.startTime) / 1000;
-  $('timerText').textContent = formatTime(gameState.elapsed);
-}
-
-function formatTime(sec) {
-  return Math.floor(sec) + 's';
+  gameState.timeLeft--;
+  gameState.totalTime++;
+  const timerEl = $('timerText');
+  timerEl.textContent = gameState.timeLeft;
+  if (gameState.timeLeft <= 3) {
+    timerEl.classList.add('urgent');
+  }
+  if (gameState.timeLeft <= 0) {
+    clearInterval(gameState.timerInterval);
+    handleTimeout();
+  }
 }
 
 function submitAnswer() {
@@ -2085,6 +2106,28 @@ function handleCorrect(q) {
   advanceReview(q.type);
 }
 
+function handleTimeout() {
+  if (gameState.inputLocked) return;
+  gameState.inputLocked = true;
+  gameState.combo = 0;
+  gameState.timeouts++;
+  SoundFX.playWrong();
+
+  const q = gameState.questions[gameState.current];
+  gameState.answers.push({ question: q, userAnswer: null, correct: false, timeout: true });
+  recordWrong(q.type);
+
+  // Show correct answer
+  $('questionDisplay').innerHTML = `${q.text.replace('?', '')}= ${q.answer} <span style="color:#1B8C3A;font-weight:900;">&#x2714;</span>`;
+  $('moleBody').innerHTML = createMoleTauntSVG();
+  $('mole').classList.add('wrong');
+
+  setTimeout(() => {
+    $('mole').classList.add('hide-down');
+    setTimeout(nextQuestion, 200);
+  }, 900);
+}
+
 function handleWrong(q, userAns) {
   gameState.combo = 0;
   SoundFX.playWrong();
@@ -2120,11 +2163,10 @@ function nextQuestion() {
 function endGame() {
   clearInterval(gameState.timerInterval);
   // Final time
-  const totalTime = gameState.elapsed;
+  const totalTime = gameState.totalTime;
   const correctCount = gameState.answers.filter(a => a.correct).length;
   const accuracy = Math.round((correctCount / gameState.totalCount) * 100);
   const score = Math.max(0, Math.round(correctCount * 100 - totalTime * 2));
-  const avgTime = (totalTime / gameState.totalCount).toFixed(1);
 
   // Stars
   let starCount = accuracy >= 100 ? 3 : accuracy >= 80 ? 2 : accuracy >= 60 ? 1 : 0;
@@ -2143,11 +2185,12 @@ function endGame() {
   $('resultStarsEarned').innerHTML = `<span class="earned-icon">⭐</span> 本轮获得 ${earnedStars} 颗星星 · 总共 ${newTotal} 颗`;
 
   $('resultStats').innerHTML = `
-    <div class="stat-item"><div class="stat-value">${formatTime(totalTime)}</div><div class="stat-label">总用时</div></div>
-    <div class="stat-item"><div class="stat-value">${avgTime}s</div><div class="stat-label">平均每题</div></div>
+    <div class="stat-item"><div class="stat-value">${totalTime}s</div><div class="stat-label">总用时</div></div>
+    <div class="stat-item"><div class="stat-value">${(totalTime / gameState.totalCount).toFixed(1)}s</div><div class="stat-label">平均每题</div></div>
     <div class="stat-item"><div class="stat-value">${correctCount}/${gameState.totalCount}</div><div class="stat-label">正确率 ${accuracy}%</div></div>
     <div class="stat-item"><div class="stat-value">${gameState.maxCombo}</div><div class="stat-label">最大连击</div></div>
     <div class="stat-item"><div class="stat-value">${score}</div><div class="stat-label">得分</div></div>
+    ${gameState.timeouts > 0 ? `<div class="stat-item"><div class="stat-value">${gameState.timeouts}</div><div class="stat-label">超时次数</div></div>` : ''}
   `;
 
   // Wrong list
@@ -2158,7 +2201,7 @@ function endGame() {
       <div class="wrong-list">
         ${wrongs.map(w => `
           <div class="wrong-item">
-            <span>${w.question.text} = <span style="text-decoration:line-through">${w.userAnswer}</span></span>
+            <span>${w.question.text} = ${w.timeout ? '<span style="color:#E53935">超时</span>' : `<span style="text-decoration:line-through">${w.userAnswer}</span>`}</span>
             <span class="wrong-correct">✓ ${w.question.answer}</span>
           </div>`).join('')}
       </div>`;
