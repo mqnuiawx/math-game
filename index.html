@@ -680,19 +680,34 @@ body::after {
 
 /* Numpad */
 .numpad {
-  display: flex; gap: 6px; justify-content: center; flex-wrap: nowrap;
-  max-width: 48vw; width: 100%; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 280px;
+  width: 100%;
+  margin: 0 auto;
 }
 .numpad-actions {
-  display: flex; gap: 12px; justify-content: center; margin-top: 12px;
+  max-width: 280px;
+  width: 100%;
+  margin: 10px auto 0;
+  display: flex;
+  gap: 10px;
 }
 .num-btn {
-  flex: 1; min-width: 0; height: 68px; border-radius: 14px; border: 2.5px solid rgba(200, 170, 120, 0.3);
+  height: 68px;
+  border-radius: 14px;
+  border: 2.5px solid rgba(200, 170, 120, 0.3);
   background: linear-gradient(180deg, #FFFFFF, #F5F0E5);
-  font-size: 34px; font-weight: 800;
-  color: var(--brown-dark); cursor: pointer;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--brown-dark);
+  cursor: pointer;
   box-shadow: 0 4px 0 #D4C9B0, var(--shadow-soft);
-  transition: all 0.1s; display: flex; align-items: center; justify-content: center;
+  transition: all 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .num-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #D4C9B0; }
 .action-btn {
@@ -1018,20 +1033,20 @@ body::after {
 
   <div class="answer-area">
     <div class="numpad" id="numpad">
-      <button class="num-btn" data-val="1">1</button>
-      <button class="num-btn" data-val="2">2</button>
-      <button class="num-btn" data-val="3">3</button>
-      <button class="num-btn" data-val="4">4</button>
-      <button class="num-btn" data-val="5">5</button>
-      <button class="num-btn" data-val="6">6</button>
       <button class="num-btn" data-val="7">7</button>
       <button class="num-btn" data-val="8">8</button>
       <button class="num-btn" data-val="9">9</button>
-      <button class="num-btn" data-val="0">0</button>
+      <button class="num-btn" data-val="4">4</button>
+      <button class="num-btn" data-val="5">5</button>
+      <button class="num-btn" data-val="6">6</button>
+      <button class="num-btn" data-val="1">1</button>
+      <button class="num-btn" data-val="2">2</button>
+      <button class="num-btn" data-val="3">3</button>
+      <button class="num-btn" data-val="0" style="grid-column: span 2;">0</button>
+      <button class="num-btn del-inline" id="delBtn" style="font-size:26px;">⌫</button>
     </div>
     <div class="numpad-actions">
-      <button class="action-btn del" id="delBtn">⌫ 删除</button>
-      <button class="action-btn confirm" id="okBtn">✓ 提交</button>
+      <button class="action-btn confirm" id="okBtn" style="flex:1;">✓ 提交</button>
     </div>
   </div>
 </div>
