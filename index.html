@@ -694,6 +694,7 @@ body::after {
   display: flex;
   gap: 10px;
 }
+.numpad-actions .action-btn.confirm { flex: 1; }
 .num-btn {
   height: 68px;
   border-radius: 14px;
@@ -710,6 +711,17 @@ body::after {
   justify-content: center;
 }
 .num-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #D4C9B0; }
+.num-btn.del-inline {
+  background: linear-gradient(180deg, #FFF3CC, #FFE699);
+  border-color: rgba(243, 166, 35, 0.4);
+  color: var(--orange);
+  box-shadow: 0 4px 0 #D4A020, var(--shadow-soft);
+}
+.num-btn.del-inline:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #D4A020;
+}
+.num-btn[data-val="0"] { grid-column: span 2; }
 .action-btn {
   padding: 14px 36px; border-radius: 18px; font-size: 22px; font-weight: 700;
   cursor: pointer; transition: all 0.1s; display: flex; align-items: center; justify-content: center;
@@ -1042,11 +1054,11 @@ body::after {
       <button class="num-btn" data-val="1">1</button>
       <button class="num-btn" data-val="2">2</button>
       <button class="num-btn" data-val="3">3</button>
-      <button class="num-btn" data-val="0" style="grid-column: span 2;">0</button>
-      <button class="num-btn del-inline" id="delBtn" style="font-size:26px;">⌫</button>
+      <button class="num-btn" data-val="0">0</button>
+      <button class="num-btn del-inline" id="delBtn">⌫</button>
     </div>
     <div class="numpad-actions">
-      <button class="action-btn confirm" id="okBtn" style="flex:1;">✓ 提交</button>
+      <button class="action-btn confirm" id="okBtn">✓ 提交</button>
     </div>
   </div>
 </div>
@@ -2290,7 +2302,7 @@ $('delBtn').addEventListener('click', () => {
 });
 $('numpad').addEventListener('click', e => {
   const btn = e.target.closest('.num-btn');
-  if (!btn || gameState.inputLocked) return;
+  if (!btn || btn.id === 'delBtn' || gameState.inputLocked) return;
   const val = btn.dataset.val;
   SoundFX.playTap();
   if (gameState.userAnswer.length < 3) {
