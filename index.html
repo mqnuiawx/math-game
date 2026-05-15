@@ -1930,10 +1930,14 @@ $('homeBtn').addEventListener('click', () => { initStartPage(); showPage('startP
 $('lbBackBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
 $('wbBackBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
 $('gameHomeBtn').addEventListener('click', () => {
+  clearInterval(gameState.timerInterval);
   if (confirm('确定要退出本次练习吗？\n（当前进度将不会保存）')) {
-    clearInterval(gameState.timerInterval);
     initStartPage();
     showPage('startPage');
+  } else {
+    if (!gameState.inputLocked) {
+      gameState.timerInterval = setInterval(updateTimer, 1000);
+    }
   }
 });
 $('resultHomeBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
