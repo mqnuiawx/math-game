@@ -987,28 +987,28 @@ body::after {
         <span class="star-num" id="totalStarsNum">0</span>
       </div>
       <div class="stats-bar-divider"></div>
-      <button class="stats-bar-btn" id="lbNavBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-4.5m-9 4.5v-4.5m0 0A3.375 3.375 0 016 10.875V9h12v1.875A3.375 3.375 0 0116.5 14.25m-9 0h9M12 9V3.75m0 0L9.75 6M12 3.75L14.25 6"/></svg>排行榜</button>
+      <button class="stats-bar-btn" id="lbNavBtn" aria-label="查看排行榜"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-4.5m-9 4.5v-4.5m0 0A3.375 3.375 0 016 10.875V9h12v1.875A3.375 3.375 0 0116.5 14.25m-9 0h9M12 9V3.75m0 0L9.75 6M12 3.75L14.25 6"/></svg>排行榜</button>
       <div class="stats-bar-divider"></div>
-      <button class="stats-bar-btn" id="wrongNavBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.966 8.966 0 00-6 2.292m0-14.25v14.25"/></svg>错题本</button>
+      <button class="stats-bar-btn" id="wrongNavBtn" aria-label="查看错题本"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.966 8.966 0 00-6 2.292m0-14.25v14.25"/></svg>错题本</button>
     </div>
   </div>
   <div class="game-title">口算打地鼠</div>
   <div class="select-panel">
     <div class="panel-label">选择难度</div>
     <div class="count-selector" id="diffSelector">
-      <button class="diff-btn selected" data-diff="1">⭐ 简单：10以内加减</button>
-      <button class="diff-btn" data-diff="2">⭐⭐ 进阶：20以内加减</button>
-      <button class="diff-btn" data-diff="3">⭐⭐⭐ 较难：两位数±一位数</button>
-      <button class="diff-btn" data-diff="4">⭐⭐⭐⭐ 挑战：两位数加减</button>
-      <button class="diff-btn" data-diff="5">⭐⭐⭐⭐⭐ 超强：进位退位</button>
+      <button class="diff-btn selected" data-diff="1" aria-label="难度：简单，10以内加减">⭐ 简单：10以内加减</button>
+      <button class="diff-btn" data-diff="2" aria-label="难度：进阶，20以内加减">⭐⭐ 进阶：20以内加减</button>
+      <button class="diff-btn" data-diff="3" aria-label="难度：较难，两位数加减一位数">⭐⭐⭐ 较难：两位数±一位数</button>
+      <button class="diff-btn" data-diff="4" aria-label="难度：挑战，两位数加减">⭐⭐⭐⭐ 挑战：两位数加减</button>
+      <button class="diff-btn" data-diff="5" aria-label="难度：超强，进位退位">⭐⭐⭐⭐⭐ 超强：进位退位</button>
     </div>
   </div>
   <div class="select-panel">
     <div class="panel-label">选择题目数量</div>
     <div class="count-selector" id="countSelector">
-      <button class="count-btn selected" data-count="20">20题</button>
-      <button class="count-btn" data-count="30">30题</button>
-      <button class="count-btn" data-count="50">50题</button>
+      <button class="count-btn selected" data-count="20" aria-label="练习20题">20题</button>
+      <button class="count-btn" data-count="30" aria-label="练习30题">30题</button>
+      <button class="count-btn" data-count="50" aria-label="练习50题">50题</button>
     </div>
   </div>
   <button class="start-btn" id="startBtn">开 始</button>
@@ -1017,7 +1017,7 @@ body::after {
 <!-- ===== GAME PAGE ===== -->
 <div id="gamePage" class="page game-page">
   <div class="game-top-left">
-    <button class="home-back" id="gameHomeBtn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>首页</button>
+    <button class="home-back" id="gameHomeBtn" aria-label="退出游戏，返回首页"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>首页</button>
     <div class="star-counter" id="starCounter">
       <span class="star-counter-icon">⭐</span>
       <span class="star-counter-num" id="starCounterNum">0</span>
@@ -1053,27 +1053,27 @@ body::after {
 
   <div class="answer-area">
     <div class="numpad" id="numpad">
-      <button class="num-btn" data-val="7">7</button>
-      <button class="num-btn" data-val="8">8</button>
-      <button class="num-btn" data-val="9">9</button>
-      <button class="num-btn" data-val="4">4</button>
-      <button class="num-btn" data-val="5">5</button>
-      <button class="num-btn" data-val="6">6</button>
-      <button class="num-btn" data-val="1">1</button>
-      <button class="num-btn" data-val="2">2</button>
-      <button class="num-btn" data-val="3">3</button>
-      <button class="num-btn" data-val="0">0</button>
-      <button class="num-btn del-inline" id="delBtn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75L14.25 12m0 0l2.25 2.25M14.25 12l2.25-2.25M14.25 12L12 14.25m-2.58 4.92l-6.374-6.375a1.125 1.125 0 010-1.59L9.42 4.83c.211-.211.498-.33.796-.33H19.5a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25h-9.284c-.298 0-.585-.119-.796-.33z"/></svg></button>
+      <button class="num-btn" data-val="7" aria-label="数字7">7</button>
+      <button class="num-btn" data-val="8" aria-label="数字8">8</button>
+      <button class="num-btn" data-val="9" aria-label="数字9">9</button>
+      <button class="num-btn" data-val="4" aria-label="数字4">4</button>
+      <button class="num-btn" data-val="5" aria-label="数字5">5</button>
+      <button class="num-btn" data-val="6" aria-label="数字6">6</button>
+      <button class="num-btn" data-val="1" aria-label="数字1">1</button>
+      <button class="num-btn" data-val="2" aria-label="数字2">2</button>
+      <button class="num-btn" data-val="3" aria-label="数字3">3</button>
+      <button class="num-btn" data-val="0" aria-label="数字0">0</button>
+      <button class="num-btn del-inline" id="delBtn" aria-label="删除"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75L14.25 12m0 0l2.25 2.25M14.25 12l2.25-2.25M14.25 12L12 14.25m-2.58 4.92l-6.374-6.375a1.125 1.125 0 010-1.59L9.42 4.83c.211-.211.498-.33.796-.33H19.5a2.25 2.25 0 012.25 2.25v10.5a2.25 2.25 0 01-2.25 2.25h-9.284c-.298 0-.585-.119-.796-.33z"/></svg></button>
     </div>
     <div class="numpad-actions">
-      <button class="action-btn confirm" id="okBtn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-4px;margin-right:6px"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>提交</button>
+      <button class="action-btn confirm" id="okBtn" aria-label="提交答案"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-4px;margin-right:6px"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>提交</button>
     </div>
   </div>
 </div>
 
 <!-- ===== RESULT PAGE ===== -->
 <div id="resultPage" class="page result-page">
-  <button class="home-back" id="resultHomeBtn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>首页</button>
+  <button class="home-back" id="resultHomeBtn" aria-label="返回首页"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>首页</button>
   <div class="result-card fade-in">
     <div class="result-title" id="resultTitle">练习完成！</div>
     <div class="result-stars" id="resultStars"></div>
@@ -1089,7 +1089,7 @@ body::after {
 
 <!-- ===== LEADERBOARD PAGE ===== -->
 <div id="lbPage" class="page lb-page">
-  <button class="home-back" id="lbHomeBtn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>首页</button>
+  <button class="home-back" id="lbHomeBtn" aria-label="返回首页"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>首页</button>
   <div class="game-title" style="font-size: 32px;">🏆 排行榜</div>
   <div class="lb-tabs" id="lbTabs"></div>
   <div class="lb-card" id="lbCard"></div>
@@ -1098,7 +1098,7 @@ body::after {
 
 <!-- ===== WRONG BOOK PAGE ===== -->
 <div id="wrongBookPage" class="page lb-page">
-  <button class="home-back" id="wbHomeBtn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>首页</button>
+  <button class="home-back" id="wbHomeBtn" aria-label="返回首页"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>首页</button>
   <div class="game-title" style="font-size: 32px;">📖 错题本</div>
   <div class="lb-card" id="wrongBookCard" style="max-height: 65vh;"></div>
   <div class="result-btns">
