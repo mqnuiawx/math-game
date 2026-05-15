@@ -1929,7 +1929,13 @@ $('retryBtn').addEventListener('click', startGame);
 $('homeBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
 $('lbBackBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
 $('wbBackBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
-$('gameHomeBtn').addEventListener('click', () => { clearInterval(gameState.timerInterval); initStartPage(); showPage('startPage'); });
+$('gameHomeBtn').addEventListener('click', () => {
+  if (confirm('确定要退出本次练习吗？\n（当前进度将不会保存）')) {
+    clearInterval(gameState.timerInterval);
+    initStartPage();
+    showPage('startPage');
+  }
+});
 $('resultHomeBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
 $('lbHomeBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
 $('wbHomeBtn').addEventListener('click', () => { initStartPage(); showPage('startPage'); });
