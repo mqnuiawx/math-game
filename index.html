@@ -1840,6 +1840,7 @@ function createMoleTauntSVG() {
 
 // ===== GAME STATE =====
 function getTimeLimit(difficulty) {
+  // 难度3和4题型不同但心算难度相近，共享15秒时限
   const limits = { 1: 10, 2: 12, 3: 15, 4: 15, 5: 20 };
   return limits[difficulty] || 10;
 }
@@ -1860,6 +1861,7 @@ let gameState = {
   stars: 0,
   timeouts: 0,
   totalTime: 0,
+  questionStartTime: 0,
 };
 
 // ===== DOM REFS =====
@@ -1940,6 +1942,7 @@ $('wbClearBtn').addEventListener('click', () => {
 
 // ===== GAME LOGIC =====
 function startGame() {
+  clearInterval(gameState.timerInterval);
   gameState.questions = buildQuestions(gameState.totalCount);
   gameState.current = 0;
   gameState.answers = [];
@@ -1952,7 +1955,7 @@ function startGame() {
   gameState.stars = 0;
   gameState.timeouts = 0;
   gameState.totalTime = 0;
-  clearInterval(gameState.timerInterval);
+  gameState.questionStartTime = 0;
 
   $('starCounterNum').textContent = '0';
   showPage('gamePage');
@@ -1983,11 +1986,11 @@ function showQuestion() {
   timerEl.classList.remove('urgent');
   timerEl.textContent = gameState.timeLeft;
   gameState.timerInterval = setInterval(updateTimer, 1000);
+  gameState.questionStartTime = Date.now();
 }
 
 function updateTimer() {
   gameState.timeLeft--;
-  gameState.totalTime++;
   const timerEl = $('timerText');
   timerEl.textContent = gameState.timeLeft;
   if (gameState.timeLeft <= 3) {
@@ -2004,8 +2007,9 @@ function submitAnswer() {
   if (gameState.userAnswer === '') return;
 
   gameState.inputLocked = true;
+  clearInterval(gameState.timerInterval);
+  gameState.totalTime += Math.round((Date.now() - gameState.questionStartTime) / 1000);
   const q = gameState.questions[gameState.current];
-  const userAns = parseInt(gameState.userAnswer);
   const correct = userAns === q.answer;
 
   gameState.answers.push({ question: q, userAnswer: userAns, correct });
@@ -2109,6 +2113,8 @@ function handleCorrect(q) {
 function handleTimeout() {
   if (gameState.inputLocked) return;
   gameState.inputLocked = true;
+  $('timerText').classList.remove('urgent');
+  gameState.totalTime += gameState.timeLimit;
   gameState.combo = 0;
   gameState.timeouts++;
   SoundFX.playWrong();
