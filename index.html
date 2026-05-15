@@ -2348,6 +2348,14 @@ function updateQuestionWithInput() {
   const q = gameState.questions[gameState.current];
   const input = gameState.userAnswer || '?';
   $('questionDisplay').textContent = `${q.text.replace('?', '')}= ${input}`;
+
+  // 自动提交：当输入位数 === 正确答案位数时
+  if (gameState.userAnswer.length > 0 && !gameState.inputLocked) {
+    const answerLen = String(q.answer).length;
+    if (gameState.userAnswer.length >= answerLen) {
+      setTimeout(submitAnswer, 80);
+    }
+  }
 }
 
 $('okBtn').addEventListener('click', () => {
