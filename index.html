@@ -2154,7 +2154,7 @@ function handleWrong(q, userAns) {
     $('questionDisplay').innerHTML = `${q.text.replace('?', '')}= ${q.answer} <span style="color:#1B8C3A;font-weight:900;">&#x2714;</span>`;
     mole.classList.add('hide-down');
     setTimeout(nextQuestion, 200);
-  }, 700);
+  }, 1000);
 }
 
 function nextQuestion() {
