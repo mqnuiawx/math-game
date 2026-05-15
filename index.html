@@ -2020,6 +2020,7 @@ function submitAnswer() {
   clearInterval(gameState.timerInterval);
   gameState.totalTime += Math.round((Date.now() - gameState.questionStartTime) / 1000);
   const q = gameState.questions[gameState.current];
+  const userAns = parseInt(gameState.userAnswer);
   const correct = userAns === q.answer;
 
   gameState.answers.push({ question: q, userAnswer: userAns, correct });
