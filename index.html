@@ -2302,10 +2302,11 @@ function updateQuestionWithInput() {
   $('questionDisplay').textContent = `${q.text.replace('?', '')}= ${input}`;
 
   // 自动提交：当输入位数 === 正确答案位数时
+  // 延迟 300ms 给孩子反应时间，如果输错了还来得及按删除
   if (gameState.userAnswer.length > 0 && !gameState.inputLocked) {
     const answerLen = String(q.answer).length;
     if (gameState.userAnswer.length >= answerLen) {
-      setTimeout(submitAnswer, 80);
+      setTimeout(submitAnswer, 300);
     }
   }
 }
